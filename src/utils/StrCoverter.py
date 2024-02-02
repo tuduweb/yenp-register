@@ -37,7 +37,23 @@ def StrCoverter(input_str : str) -> tuple:
         pass
     return num_valid, num_result
 
+# from Internet
+def E_trans_to_C(string):
+    E_pun = u',.!?[]()<>"\';:'
+    C_pun = u'，。！？【】（）《》“‘；：'
+    table= {ord(f):ord(t) for f,t in zip(E_pun,C_pun)}
+    return string.translate(table)
+
+def RangeStrConvert(range_str):
+    # comments covert .. 
+    # range_str.replace(chr(65306), chr(58)) # not work
+    print(range_str)
+
+
 if __name__ == "__main__":
+    import argparse
+
+
     testStrings = [
         "h00",
         "'h33",
@@ -48,3 +64,5 @@ if __name__ == "__main__":
 
     for idx, testItem in enumerate(testStrings):
         print(idx, testItem, StrCoverter(testItem))
+
+    RangeStrConvert("102:222")
