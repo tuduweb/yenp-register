@@ -1,3 +1,5 @@
+import re
+
 class YenpBasicNumber(object):
     numberString = ""
 
@@ -44,10 +46,24 @@ def E_trans_to_C(string):
     table= {ord(f):ord(t) for f,t in zip(E_pun,C_pun)}
     return string.translate(table)
 
-def RangeStrConvert(range_str):
+def RangeStrConvert(range_str) -> tuple:
+    msb, lsb = (0, 0)
     # comments covert .. 
     # range_str.replace(chr(65306), chr(58)) # not work
     print(range_str)
+
+    # "a:b" style
+    if range_str.isdigit():
+        msb, lsb = (int(range_str), ) * 2
+    elif re.match(r"\d+:\d+", range_str):
+        range_nums = [int(num) for num in range_str.split(":")]
+        # reverse
+        range_nums = range_nums[::-1]
+        print(range_nums)
+
+        msb, lsb = range_nums[0], range_nums[1]
+
+    return msb, lsb
 
 
 if __name__ == "__main__":
@@ -65,4 +81,8 @@ if __name__ == "__main__":
     for idx, testItem in enumerate(testStrings):
         print(idx, testItem, StrCoverter(testItem))
 
-    RangeStrConvert("102:222")
+    t0 = RangeStrConvert("3")
+    t1 = RangeStrConvert("102:222")
+    t2 = RangeStrConvert("-102:222")
+
+    print(t0, t1, t2)
